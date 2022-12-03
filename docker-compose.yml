@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    log-f:
+        build:
+            context: .
+        volumes:
+            - ".:/app"
+            - "/app/node_modules"
+        image: log-f:dev
+        command: npm run start:watch
+        container_name: log-f
