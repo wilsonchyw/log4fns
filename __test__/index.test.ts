@@ -1,4 +1,4 @@
-import {Log} from "../src";
+import Log from "../src";
 class TestClass{
     main(){
         Log("")

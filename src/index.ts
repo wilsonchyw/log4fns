@@ -15,7 +15,7 @@ const genContent = (e: any, timeZone: string | undefined, ...message: any[]): st
     return `${time} | ${location} |${fnName}| ${message.join(', ')}`;
 };
 
-export const Log: LogType = (...message: any[]) => {
+const Log: LogType = (...message: any[]) => {
     const e = new Error();
     let timeZone;
     if (process && process.env.TIME_ZONE) timeZone = process.env.TIME_ZONE;

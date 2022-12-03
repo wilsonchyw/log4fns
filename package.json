@@ -4,6 +4,7 @@
     "description": "This package aims to log the message with caller function's name and location",
     "author": "wilsonchyw",
     "license": "ISC",
+    "type": "commonjs",
     "keywords": [
         "npm",
         "package",
@@ -56,5 +57,8 @@
     "files": [
         "lib/**/*"
     ],
-    "types": "lib/cjs/index.d.ts"
+    "types": "lib/cjs/index.d.ts",
+    "dependencies": {
+        "log4fns": "^1.0.0"
+    }
 }
