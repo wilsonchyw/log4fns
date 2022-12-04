@@ -1,6 +1,6 @@
 {
     "name": "log4fns",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "This package aims to log the message with caller function's name and location",
     "author": "wilsonchyw",
     "license": "ISC",
@@ -27,8 +27,7 @@
         "prepare": "npm run build",
         "prepublishOnly": "npm run test && npm run lint",
         "preversion": "npm run lint",
-        "version": "npm run format && git add -A src",
-        "postversion": "git push && git push --tags"
+        "version": "npm run format && git add -A src"
     },
     "exports": {
         ".": {

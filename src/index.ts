@@ -9,7 +9,7 @@ type LogType = {
 const getFns = (e: any) => {
     const locationRegex = Log.verbose ? /[\w\/]+\.[\w]+:[0-9]+/ : /[\w]+\.[\w]+:[0-9]+/;
     const location = locationRegex.exec(e.stack.split('\n')[2]) || 'Unknown';
-    const functionRegex = /\ {1}(?!at)[\w\.]+\ /;
+    const functionRegex = /\ {1}(?!at)[\w\.<>]+\ /;
     const fnName = functionRegex.exec(e.stack.split('\n')[2]) || ' Anonymous ';
     return { location, fnName };
 };
