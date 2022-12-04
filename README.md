@@ -3,7 +3,7 @@
 ![](https://img.shields.io/bundlephobia/min/log4fns)
 ![](https://img.shields.io/npm/l/log4fns)
 
-A very lightweight Javascript untility that log the function name and location from where it is called. Useful for bug tracking during software  development. Support both ESM and CommonJS.
+A very lightweight Javascript utility that logs the function name and location from where it is called. Useful for bug tracking during software development. Support both ESM and CommonJS.
 
 ![screen shot](https://i.imgur.com/1M09M3d.png)
 
