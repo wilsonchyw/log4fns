@@ -1,31 +1,40 @@
 type LogType = {
     (...message: any[]): void;
-    TIME_ZONE?: string | undefined;
+    timeZone?: string | undefined;
+    verbose?: boolean;
     setTimeZone: (timeZone: string) => void;
+    setVerbose: (b: boolean) => void;
 };
 
-const genContent = (e: any, timeZone: string | undefined, ...message: any[]): string => {
+const getFns = (e: any) => {
+    const locationRegex = Log.verbose ? /[\w\/]+\.[\w]+:[0-9]+/ : /[\w]+\.[\w]+:[0-9]+/;
+    const location = locationRegex.exec(e.stack.split('\n')[2]) || 'Unknown';
+    const functionRegex = /\ {1}(?!at)[\w\.]+\ /;
+    const fnName = functionRegex.exec(e.stack.split('\n')[2]) || ' Anonymous ';
+    return { location, fnName };
+};
+
+const genContent = (e: any, ...message: any[]): string => {
+    const isNode = typeof window === 'undefined';
+    const timeZone = Log.timeZone || isNode ? process.env.TIME_ZONE : undefined;
     const time = new Date().toLocaleString('en-US', { timeZone });
     message = message.map((msg) => (typeof msg === 'object' ? JSON.stringify(msg) : msg));
-    if (process && process.env.NODE_ENV === 'production') return `${time} | ${message.join(' ')}`;
-    const locationRegex = /[\w]+\.[\w]+:[0-9]+/;
-    const location = locationRegex.exec(e.stack.split('\n')[2]);
-    const functionRegex = /\ {1}(?!at)[\w\.]+\ /;
-    const fnName = functionRegex.exec(e.stack.split('\n')[2]) || ' anonymous ';
+    if (isNode && process.env.NODE_ENV === 'production') return `${time} | ${message.join(' ')}`;
+    const { location, fnName } = getFns(e);
     return `${time} | ${location} |${fnName}| ${message.join(', ')}`;
 };
 
 const Log: LogType = (...message: any[]) => {
-    const e = new Error();
-    let timeZone;
-    if (process && process.env.TIME_ZONE) timeZone = process.env.TIME_ZONE;
-    if (Log.TIME_ZONE) timeZone = Log.TIME_ZONE;
-    const content = genContent(e, timeZone, ...message);
+    const content = genContent(new Error(), ...message);
     console.log(content);
 };
 
 Log.setTimeZone = (tz: string) => {
-    Log.TIME_ZONE = tz;
+    Log.timeZone = tz;
+};
+
+Log.setVerbose = (b: boolean) => {
+    Log.verbose = b;
 };
 
 export default Log;

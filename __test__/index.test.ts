@@ -19,13 +19,13 @@ describe("Testing Log function", () => {
             Log("arg1");
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("arg1"));
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("test.ts"));
-            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("anonymous"));
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Anonymous"));
         });
 
         test('SetTimeZone should change the Log\'s timezone setting',()=>{
-            expect(Log.TIME_ZONE).toBe(undefined)
+            expect(Log.timeZone).toBe(undefined)
             Log.setTimeZone("America/Vancouver")
-            expect(Log.TIME_ZONE).toBe("America/Vancouver")
+            expect(Log.timeZone).toBe("America/Vancouver")
         })
     });
 
@@ -39,7 +39,7 @@ describe("Testing Log function", () => {
             Log("arg1","arg2");
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("arg1"));
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("test.ts"));
-            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("anonymous"));
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Anonymous"));
         });
 
         test('Should print out function name Test.main',()=>{
@@ -57,7 +57,7 @@ describe("Testing Log function", () => {
         test('Should not print out the function name or file name', () => {
             Log("");
             expect(console.log).not.toHaveBeenCalledWith(expect.stringContaining("test"));
-            expect(console.log).not.toHaveBeenCalledWith(expect.stringContaining("anonymous"));
+            expect(console.log).not.toHaveBeenCalledWith(expect.stringContaining("Anonymous"));
         });
     });
 
