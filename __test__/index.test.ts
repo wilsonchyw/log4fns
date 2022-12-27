@@ -3,6 +3,10 @@ class TestClass{
     main(){
         Log("")
     }
+
+    async mainAsync(){
+        Log("")
+    }
 }
 describe("Testing Log function", () => {
     const log = console.log;
@@ -15,11 +19,11 @@ describe("Testing Log function", () => {
     });
 
     describe("In test enviornment ", () => {
-        test('Should print out file name(test.ts), function name(anonymous) and message(arg1)', () => {
+        test('Should print out file name(test.ts), function name(Anonymous) and message(arg1)', () => {
             Log("arg1");
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("arg1"));
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("test.ts"));
-            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("anonymous"));
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Anonymous"));
         });
 
         test('SetTimeZone should change the Log\'s timezone setting',()=>{
@@ -39,13 +43,15 @@ describe("Testing Log function", () => {
             Log("arg1","arg2");
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("arg1"));
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("test.ts"));
-            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("anonymous"));
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Anonymous"));
         });
 
         test('Should print out function name Test.main',()=>{
             const testClass = new TestClass()
             testClass.main()
+            testClass.mainAsync()
             expect(console.log).toHaveBeenCalledWith(expect.stringContaining("TestClass.main"));
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining("TestClass.mainAsync"));
         })
     });
 

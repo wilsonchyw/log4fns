@@ -3,7 +3,7 @@
 ![](https://img.shields.io/bundlephobia/min/log4fns)
 ![](https://img.shields.io/npm/l/log4fns)
 
-A very lightweight Javascript untility that log the function name and location from where it is called. Useful for bug tracking during software  development. Support both ESM and CommonJS.
+A very lightweight Javascript utility that logs the function name and location from where it is called. Useful for bug tracking during software development. Support both ESM and CommonJS.
 
 ![screen shot](https://i.imgur.com/1M09M3d.png)
 
@@ -24,10 +24,16 @@ npm install log4fns
 import Log from "log4fns"
 // CommonJS
 const Log = require("log4fns").default
+```
 
-/** Optional */
-/** In case you are using a remote enviornment and want to get the correct local time */
+### Optional
+```javascript
+// If you are using a remote enviornment and want to get the correct local time
+// or you want to change the default timezone
 Log.setTimeZone("Your time zone")
+
+// If you need to ouput the function name and path in Production
+Log.setShowDetailInProduction(true)
 ```
 
 ### Example

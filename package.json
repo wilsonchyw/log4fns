@@ -1,6 +1,6 @@
 {
     "name": "log4fns",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "description": "This package aims to log the message with caller function's name and location",
     "author": "wilsonchyw",
     "license": "ISC",
@@ -11,23 +11,24 @@
         "wilsonchyw",
         "log",
         "file name",
-        "function name"
+        "function name",
+        "file path"
     ],
     "main": "lib/cjs/index.js",
     "scripts": {
-        "start": "ts-node src/index.ts",
-        "start:test": "npx jest --verbose",
+        "start": "npx ts-node src/index.ts",
+        "start:test": "node index.js",
         "start:watch": "nodemon ",
         "format": "prettier --write \"src/**/*.ts\"",
         "build": "npm run build:cjs && npm run build:esm",
         "build:cjs": "tsc -p tsconfig.cjs.json",
         "build:esm": "tsc -p tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
         "lint": "tslint -p tsconfig.json",
-        "test": "jest --coverage",
+        "test": "jest --coverage --verbose",
         "prepare": "npm run build",
         "prepublishOnly": "npm run test && npm run lint",
         "preversion": "npm run lint",
-        "version": "npm run format && git add -A src"
+        "version": "npm run format"
     },
     "exports": {
         ".": {
@@ -36,10 +37,10 @@
                 "default": "./lib/esm/index.mjs"
             },
             "require": {
-                "types": "./lib/cjs/types/index.d.ts",
                 "default": "./lib/cjs/index.js"
             }
-        }
+        },
+        "./package.json": "./package.json"
     },
     "devDependencies": {
         "@types/jest": "^29.2.3",

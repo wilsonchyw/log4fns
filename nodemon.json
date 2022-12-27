@@ -1,5 +1,7 @@
 {
     "watch": ["./src/**/*", "./__test__/**/*", "index.js", "nodemon.json"],
     "ext": "*",
-    "exec": "npm run test"
+    "exec": " npm run test",
+    "env": {
+    }
 }
