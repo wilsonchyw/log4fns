@@ -1,6 +1,6 @@
 {
     "name": "log4fns",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "description": "This package aims to log the message with caller function's name and location",
     "author": "wilsonchyw",
     "license": "ISC",

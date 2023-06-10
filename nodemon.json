@@ -2,6 +2,5 @@
     "watch": ["./src/**/*", "./__test__/**/*", "index.js", "nodemon.json"],
     "ext": "*",
     "exec": " npm run start",
-    "env": {
-    }
+    "env": {}
 }

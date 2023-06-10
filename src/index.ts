@@ -9,13 +9,16 @@
  * @function {(b: boolean) => void} setShowDetailInProduction - A function that takes a boolean and sets the `showDetailInProduction` property.
  */
 interface LogType {
-    (...message: any[]): void;
+    (...message: any): void;
     timeZone?: string | undefined;
     verbose?: boolean;
     showDetailInProduction?: boolean;
+    callback?: (content: string) => any;
     setTimeZone: (timeZone: string) => void;
     setVerbose: (b: boolean) => void;
     setShowDetailInProduction: (b: boolean) => void;
+    use: (callback: (content: string) => any) => void;
+    tag: (tag: string) => (...message: any) => void;
 }
 
 /**
@@ -23,10 +26,10 @@ interface LogType {
  * @param {any} e - An error object whose stack trace will be parsed.
  * @returns {Object} An object containing the location and function name.
  */
-function getFnDetail(e: any) {
+function getFnDetail(e: any): { location: string; fnName: string } {
     const stacks = e.stack.split('\n');
     const locationRegex = Log.verbose ? /[\w\/]+\.[\w]+:[0-9]+/ : /[\w]+\.[\w]+:[0-9]+/;
-    const location = locationRegex.exec(stacks[2]) || 'Unknown';
+    const location = (locationRegex.exec(stacks[2]) || ['Unknown'])[0];
     const functionRegex = /(?!at)(?<=\ {1})[\w\.<>]+(?=\ {1})/;
 
     let fnName = (functionRegex.exec(stacks[2]) || ['Anonymous'])[0];
@@ -50,7 +53,6 @@ function getFnDetail(e: any) {
 
 /**
  * Generates content for logging purposes.
- *
  * @param {any} e - An error object or anything else.
  * @param {any[]} message - An array of messages to be logged.
  * @returns {string} The generated content.
@@ -66,22 +68,21 @@ function genContent(e: any, message: any[]): string {
 
 /**
  * Logs the provided message(s).
- *
  * @param {...any} message - The message(s) to be logged.
  * @returns {void}
  */
-const Log: LogType = (...message: any[]) => {
+const Log: LogType = (...message: any): void => {
     const content = genContent(new Error(), message);
     console.log(content);
+    if (Log.callback) Log.callback(content);
 };
 
 /**
  * Sets the time zone for the logs.
- *
  * @param {string} tz - The time zone to be set.
  * @returns {void}
  */
-Log.setTimeZone = (tz: string) => {
+Log.setTimeZone = (tz: string): void => {
     Object.defineProperty(Log, 'timeZone', {
         value: tz,
         writable: false,
@@ -90,11 +91,10 @@ Log.setTimeZone = (tz: string) => {
 
 /**
  * Sets the verbosity of the logs.
- *
  * @param {boolean} b - A boolean indicating whether the logs should be verbose or not.
  * @returns {void}
  */
-Log.setVerbose = (b: boolean) => {
+Log.setVerbose = (b: boolean): void => {
     Object.defineProperty(Log, 'verbose', {
         value: b,
         writable: false,
@@ -103,15 +103,30 @@ Log.setVerbose = (b: boolean) => {
 
 /**
  * Sets the visibility of details in production logs.
- *
  * @param {boolean} b - A boolean indicating whether the details should be shown in production logs or not.
  * @returns {void}
  */
-Log.setShowDetailInProduction = (b: boolean) => {
+Log.setShowDetailInProduction = (b: boolean): void => {
     Object.defineProperty(Log, 'showDetailInProduction', {
         value: b,
         writable: false,
     });
 };
 
+Log.use = (callback: (content: string) => any): void => {
+    Object.defineProperty(Log, 'callback', {
+        value: callback,
+        writable: false,
+    });
+};
+
+Log.tag = (tag: string) => {
+    return (...message: any) => {
+        Log(`\x1b[43m${tag}\x1b[0m |`, ...message);
+    };
+};
+
 export default Log;
+
+
+
