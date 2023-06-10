@@ -3,7 +3,8 @@
 ![](https://img.shields.io/bundlephobia/min/log4fns)
 ![](https://img.shields.io/npm/l/log4fns)
 
-A very lightweight Javascript utility that logs the function name and location from where it is called. Useful for bug tracking during software development. Support both ESM and CommonJS.
+Log4fns is a lightweight, high-performance JavaScript utility that simplifies bug tracking during software development by logging the function name and location from where it is called. supports both ESM and CommonJS.
+With Log4fns, developers can easily identify the source of bugs, improve the debugging process, and increase software quality..
 
 ![screen shot](https://i.imgur.com/1M09M3d.png)
 
