@@ -34,11 +34,14 @@ const Log = require("log4fns").default
 // or you want to change the default timezone
 Log.setTimeZone("Your time zone")
 
+
 // If you need to ouput the function name and path in Production
 Log.setShowDetailInProduction(true)
 
+
 // If you need to ouput the absolute file path
-Log.setShowDetailInProduction(setVerbose)
+Log.setVerbose(true)
+
 
 // If you need to reuse the output, such as log into a file
 const writer = fs.createWriteStream(`${__dirname}/${new Date().toJSON()}.log`, {
